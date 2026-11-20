@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Tolmacz.App.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:presentation="clr-namespace:Tolmacz.Presentation;assembly=Tolmacz.Presentation"
+    x:DataType="presentation:MainViewModel"
+    Title="Tolmacz"
+    BackgroundColor="{AppThemeBinding Light=#F4F5FB, Dark=#0E1016}">
+
+    <ContentPage.Resources>
+        <Color x:Key="AccentStart">#4F46E5</Color>
+        <Color x:Key="AccentEnd">#8B5CF6</Color>
+
+        <LinearGradientBrush x:Key="AccentBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="{StaticResource AccentStart}" Offset="0" />
+            <GradientStop Color="{StaticResource AccentEnd}" Offset="1" />
+        </LinearGradientBrush>
+
+        <Style x:Key="PrimaryText" TargetType="Label">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light=#171A23, Dark=#F3F4F8}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <Style x:Key="MutedText" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light=#6B7183, Dark=#8E94A6}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+        </Style>
+        <Style x:Key="LanguageLabel" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light=#4F46E5, Dark=#A5A0FF}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#171A23}" />
+            <Setter Property="Stroke" Value="{AppThemeBinding Light=#E9EBF3, Dark=#262A37}" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+            <Setter Property="Padding" Value="20,16,16,12" />
+            <Setter Property="Shadow">
+                <Shadow Brush="#1E1B4B" Offset="0,8" Radius="24" Opacity="0.10" />
+            </Setter>
+        </Style>
+        <Style x:Key="TextArea" TargetType="Editor">
+            <Setter Property="AutoSize" Value="Disabled" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light=#171A23, Dark=#F3F4F8}" />
+            <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light=#A0A5B5, Dark=#626879}" />
+        </Style>
+        <Style x:Key="GhostButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderWidth" Value="0" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="MinimumHeightRequest" Value="32" />
+            <Setter Property="Padding" Value="12,4" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light=#4A5063, Dark=#C5C9D6}" />
+            <Style.Triggers>
+                <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.35" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="StepperIcon" TargetType="Button" BasedOn="{StaticResource GhostButton}">
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="HeightRequest" Value="30" />
+            <Setter Property="MinimumHeightRequest" Value="30" />
+            <Setter Property="MinimumWidthRequest" Value="30" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="WidthRequest" Value="30" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid Padding="28,20,28,20" RowDefinitions="Auto,*,Auto" RowSpacing="18">
+
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <Border
+                Background="{StaticResource AccentBrush}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 12"
+                WidthRequest="40"
+                HeightRequest="40">
+                <Label
+                    Text="T"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="20"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Label
+                    Style="{StaticResource PrimaryText}"
+                    Text="Tolmacz"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="18" />
+                <Label Style="{StaticResource MutedText}" Text="Private, offline translation" />
+            </VerticalStackLayout>
+
+            <Border
+                Grid.Column="2"
+                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#171A23}"
+                Stroke="{AppThemeBinding Light=#E9EBF3, Dark=#262A37}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 19"
+                Padding="4"
+                VerticalOptions="Center">
+                <HorizontalStackLayout Spacing="2">
+                    <Button
+                        Style="{StaticResource StepperIcon}"
+                        SemanticProperties.Description="Make text smaller"
+                        Command="{Binding DecreaseTextSizeCommand}">
+                        <Button.ImageSource>
+                            <FontImageSource
+                                FontFamily="OpenSansSemibold"
+                                Glyph="−"
+                                Size="16"
+                                Color="{AppThemeBinding Light=#4A5063, Dark=#C5C9D6}" />
+                        </Button.ImageSource>
+                    </Button>
+                    <Button
+                        Style="{StaticResource GhostButton}"
+                        Text="{Binding TextSizeLabel}"
+                        FontSize="12"
+                        MinimumHeightRequest="30"
+                        MinimumWidthRequest="54"
+                        Padding="4,0"
+                        SemanticProperties.Description="Reset text size"
+                        Command="{Binding ResetTextSizeCommand}" />
+                    <Button
+                        Style="{StaticResource StepperIcon}"
+                        SemanticProperties.Description="Make text larger"
+                        Command="{Binding IncreaseTextSizeCommand}">
+                        <Button.ImageSource>
+                            <FontImageSource
+                                FontFamily="OpenSansSemibold"
+                                Glyph="+"
+                                Size="16"
+                                Color="{AppThemeBinding Light=#4A5063, Dark=#C5C9D6}" />
+                        </Button.ImageSource>
+                    </Button>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                <Border Style="{StaticResource Card}">
+                    <Grid RowDefinitions="Auto,*,38" RowSpacing="8">
+                        <Label
+                            Style="{StaticResource LanguageLabel}"
+                            Text="{Binding SourceLanguage}"
+                            Margin="5,0,0,0" />
+                        <Editor
+                            Grid.Row="1"
+                            Style="{StaticResource TextArea}"
+                            FontSize="{Binding EditorFontSize}"
+                            Text="{Binding SourceText}"
+                            Placeholder="{Binding SourcePlaceholder}"
+                            SemanticProperties.Description="Text to translate" />
+                        <Grid Grid.Row="2" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="6">
+                            <Label
+                                Style="{StaticResource MutedText}"
+                                Text="{Binding CharacterCountLabel}"
+                                Margin="5,0,0,0" />
+                            <Button
+                                Grid.Column="1"
+                                Style="{StaticResource GhostButton}"
+                                Text="Clear"
+                                VerticalOptions="Center"
+                                Command="{Binding ClearCommand}" />
+                            <Button
+                                x:Name="TranslateButton"
+                                Grid.Column="2"
+                                Text="{Binding TranslateButtonText}"
+                                Command="{Binding TranslateCommand}"
+                                Background="{StaticResource AccentBrush}"
+                                TextColor="White"
+                                FontFamily="OpenSansSemibold"
+                                FontSize="14"
+                                BorderWidth="0"
+                                CornerRadius="19"
+                                HeightRequest="38"
+                                MinimumHeightRequest="38"
+                                MinimumWidthRequest="112"
+                                Padding="20,0">
+                                <Button.Shadow>
+                                    <Shadow Brush="#4F46E5" Offset="0,3" Radius="10" Opacity="0.28" />
+                                </Button.Shadow>
+                                <Button.Triggers>
+                                    <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.45" />
+                                    </Trigger>
+                                </Button.Triggers>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource Card}">
+                    <Grid RowDefinitions="Auto,*,38" RowSpacing="8">
+                        <Label
+                            Style="{StaticResource LanguageLabel}"
+                            Text="{Binding TargetLanguage}"
+                            Margin="21,0,0,0" />
+                        <Editor
+                            Grid.Row="1"
+                            Style="{StaticResource TextArea}"
+                            FontSize="{Binding EditorFontSize}"
+                            Text="{Binding TranslatedText}"
+                            IsReadOnly="True"
+                            Placeholder="{Binding TargetPlaceholder}"
+                            Margin="16,0,0,0"
+                            SemanticProperties.Description="Translation" />
+                        <Button
+                            Grid.Row="2"
+                            Style="{StaticResource GhostButton}"
+                            Text="Copy"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Command="{Binding CopyCommand}" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Button
+                Text="⇄"
+                Background="{StaticResource AccentBrush}"
+                TextColor="White"
+                FontSize="18"
+                BorderWidth="0"
+                CornerRadius="22"
+                Padding="0"
+                WidthRequest="44"
+                HeightRequest="44"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                Margin="0,12,0,0"
+                SemanticProperties.Description="Swap languages"
+                Command="{Binding SwapCommand}">
+                <Button.Shadow>
+                    <Shadow Brush="#4F46E5" Offset="0,4" Radius="12" Opacity="0.35" />
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="16" RowDefinitions="Auto,Auto" RowSpacing="4">
+            <Label
+                Style="{StaticResource PrimaryText}"
+                Text="{Binding Status}"
+                FontSize="13"
+                LineBreakMode="TailTruncation" />
+            <ProgressBar
+                Grid.Column="1"
+                Progress="{Binding Progress}"
+                IsVisible="{Binding IsTranslating}"
+                ProgressColor="{StaticResource AccentStart}"
+                VerticalOptions="Center"
+                WidthRequest="240" />
+            <Label
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource MutedText}"
+                Text="Model: BiDi-eng-pol by Allegro, CC BY 4.0, converted to quantized ONNX"
+                FontSize="11" />
+        </Grid>
+    </Grid>
+</ContentPage>

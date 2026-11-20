@@ -1,0 +1,104 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('osx'))">net10.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">net10.0-windows10.0.19041.0</TargetFrameworks>
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>Tolmacz.App</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<MauiXamlInflator>SourceGen</MauiXamlInflator>
+
+		<ApplicationTitle>Tolmacz</ApplicationTitle>
+		<ApplicationId>com.tomaszjerzak.tolmacz</ApplicationId>
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<!-- Windows: a plain executable that carries its own .NET and Windows App SDK. -->
+		<WindowsPackageType>None</WindowsPackageType>
+		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+		<SelfContained Condition="$([MSBuild]::IsOSPlatform('windows'))">true</SelfContained>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">17.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+
+		<!-- The stable .NET pack expects Xcode 26.x; this also allows building with newer Xcode. -->
+		<ValidateXcodeVersion>false</ValidateXcodeVersion>
+
+		<!-- The Mono interpreter crashes while translating longer sentences. -->
+		<UseInterpreter Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">false</UseInterpreter>
+
+		<ModelDirectory>$(MSBuildThisFileDirectory)..\..\models\bidi-eng-pol\</ModelDirectory>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#1F5EFF" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1F5EFF" BaseSize="128,128" />
+		<MauiFont Include="Resources\Fonts\*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.32.0" GeneratePathProperty="true" />
+		<PackageReference Include="Microsoft.ML.Tokenizers" Version="3.0.0" GeneratePathProperty="true" />
+		<ProjectReference Include="..\Tolmacz\Tolmacz.csproj" />
+		<ProjectReference Include="..\Tolmacz.Presentation\Tolmacz.Presentation.csproj" />
+	</ItemGroup>
+
+	<!-- The model files the app needs at run time. -->
+	<ItemGroup>
+		<ModelFile Include="$(ModelDirectory)encoder_model.int8.onnx" />
+		<ModelFile Include="$(ModelDirectory)decoder_model_merged.int8.onnx" />
+		<ModelFile Include="$(ModelDirectory)source.spm" />
+		<ModelFile Include="$(ModelDirectory)vocab.json" />
+		<ModelFile Include="$(ModelDirectory)model.json" />
+	</ItemGroup>
+
+	<!-- License notices that must stay with every distributed copy. -->
+	<ItemGroup>
+		<LicenseFile Include="..\..\LICENSE" />
+		<LicenseFile Include="..\..\NOTICE.md" />
+		<LicenseFile Include="$(PkgMicrosoft_ML_OnnxRuntime)/ThirdPartyNotices.txt" />
+		<LicenseFile Include="$(PkgMicrosoft_ML_Tokenizers)/THIRD-PARTY-NOTICES.TXT" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
+		<BundleResource Include="@(ModelFile)" LogicalName="Models/bidi-eng-pol/%(Filename)%(Extension)" />
+		<BundleResource Include="@(LicenseFile)" LogicalName="Licenses/%(Filename)%(Extension)" />
+
+		<!-- Belongs to the optional ONNX Runtime extensions, which are not used. -->
+		<ReferenceNativeSymbol Include="RegisterCustomOps" SymbolType="Function" SymbolMode="Ignore" />
+
+		<!-- ONNX Runtime ships a Mac Catalyst library but does not link it automatically. -->
+		<NativeReference Include="$(PkgMicrosoft_ML_OnnxRuntime)/runtimes/ios/native/onnxruntime.xcframework.zip">
+			<Kind>Static</Kind>
+			<IsCxx>True</IsCxx>
+			<SmartLink>True</SmartLink>
+			<ForceLoad>True</ForceLoad>
+			<LinkerFlags>-lc++</LinkerFlags>
+			<WeakFrameworks>CoreML</WeakFrameworks>
+		</NativeReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+		<Content Include="@(ModelFile)"
+		         Link="Models\bidi-eng-pol\%(Filename)%(Extension)"
+		         CopyToOutputDirectory="PreserveNewest"
+		         CopyToPublishDirectory="PreserveNewest" />
+		<Content Include="@(LicenseFile)"
+		         Link="Licenses\%(Filename)%(Extension)"
+		         CopyToOutputDirectory="PreserveNewest"
+		         CopyToPublishDirectory="PreserveNewest" />
+	</ItemGroup>
+
+	<!-- The Mac build checks bundle resources before the general BeforeBuild step. -->
+	<Target Name="CheckModelFiles" BeforeTargets="_CollectBundleResources;BeforeBuild">
+		<Error Condition="!Exists('%(ModelFile.FullPath)')"
+		       Text="Missing model file %(ModelFile.FullPath). Download https://github.com/TomJerzak/tolmacz-model/releases/tag/bidi-eng-pol-v1 and extract it into models/bidi-eng-pol (see README.md)." />
+	</Target>
+
+</Project>

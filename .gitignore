@@ -1,0 +1,16 @@
+bin/
+obj/
+dist/
+.evaluation/
+.venv-comet/
+.venv/
+.vs/
+*.user
+*.Backup.tmp
+.DS_Store
+
+# Model files are large. Download them from https://github.com/TomJerzak/tolmacz-model/releases/tag/bidi-eng-pol-v1
+models/**/*.onnx
+
+# Personal Claude Code settings; project skills in .claude/skills are shared.
+.claude/settings.local.json

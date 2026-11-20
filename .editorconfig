@@ -1,0 +1,31 @@
+root = true
+
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+
+[*.{csproj,xaml,xml,plist}]
+indent_style = space
+indent_size = 4
+
+# Test names use underscores so they read as sentences.
+[tests/**/*.cs]
+dotnet_diagnostic.CA1707.severity = none
+
+# "Step" is reserved only in Visual Basic, and this project is C#.
+[src/Tolmacz/BeamSearch.cs]
+dotnet_diagnostic.CA1716.severity = none
+
+# These are the standard names on Apple platforms.
+[src/Tolmacz.App/Platforms/MacCatalyst/{AppDelegate,SceneDelegate}.cs]
+dotnet_diagnostic.CA1711.severity = none
+
+# Objective-C menu actions must be instance methods.
+[src/Tolmacz.App/Platforms/MacCatalyst/AppDelegate.cs]
+dotnet_diagnostic.CA1822.severity = none

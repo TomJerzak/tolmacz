@@ -1,0 +1,22 @@
+{
+  "id": "bidi-eng-pol",
+  "version": "1",
+  "files": {
+    "encoder_model.int8.onnx": {
+      "size": 211225952,
+      "sha256": "b68574b8fe5f9945182cbd27115962d52bc3216ae1296e00bcc4742a2c8d7401"
+    },
+    "decoder_model_merged.int8.onnx": {
+      "size": 269811418,
+      "sha256": "9066fbbe9f718b6758b3d05f66a77d746c122447ffc1612079f582b98a0ee732"
+    },
+    "source.spm": {
+      "size": 816124,
+      "sha256": "df970686fbcb103060bdee8eeaf91759246ab24f9a2d56121145850cc0239569"
+    },
+    "vocab.json": {
+      "size": 803748,
+      "sha256": "4c80e0586ac16782ed04de87a0f1ac77708dea392ee49b85829b19e49bde84b5"
+    }
+  }
+}

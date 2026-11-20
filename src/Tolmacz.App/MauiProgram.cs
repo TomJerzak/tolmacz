@@ -1,4 +1,7 @@
 using Tolmacz.Presentation;
+#if WINDOWS
+using Microsoft.Maui.LifecycleEvents;
+#endif
 
 namespace Tolmacz.App;
 
@@ -48,12 +51,67 @@ public static class MauiProgram
                 textBox.Arrange(Microsoft.UI.Xaml.Controls.Primitives.LayoutInformation.GetLayoutSlot(textBox));
             });
         });
+
+        // After the Windows theme changes while Tolmacz runs, "−" and "+" disappear and Clear and
+        // Copy keep the gray of the old theme. MAUI updates its colors inside the
+        // WM_SETTINGCHANGE message, and two kinds of button colors miss that update:
+        // - Win2D draws the "−" and "+" icons, but it cannot make its COM call inside that message
+        //   (RPC_E_CANTCALLOUT_ININPUTSYNCCALL). MAUI catches the error and removes the icon.
+        //   Loading the icons again after the message draws them in the new color.
+        // - Clear and Copy are disabled when the window is built, so MAUI first gives them the
+        //   Disabled color of Styles.xaml. Setting the GhostButton color binding then moves that
+        //   color to a layer above all styles, where it stays after the button is enabled, and no
+        //   binding updates it. Applying the style again while the button shows its Disabled state
+        //   moves the Disabled color of the new theme there, as at start, so the buttons look as
+        //   they do after a restart in the new theme.
+        builder.ConfigureLifecycleEvents(events => events.AddWindows(windows => windows.OnWindowCreated(_ =>
+        {
+            Application.Current!.RequestedThemeChanged -= OnRequestedThemeChanged;
+            Application.Current.RequestedThemeChanged += OnRequestedThemeChanged;
+        })));
 #endif
 
         return builder.Build();
     }
 
 #if WINDOWS
+    private static void OnRequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
+    {
+        foreach (var window in Application.Current!.Windows)
+        {
+            if (window is { Page: { } page, Handler.PlatformView: Microsoft.UI.Xaml.Window platformWindow })
+            {
+                platformWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                {
+                    foreach (var button in page.GetVisualTreeDescendants().OfType<Button>())
+                    {
+                        UpdateThemeColors(button);
+                    }
+                });
+            }
+        }
+    }
+
+    private static void UpdateThemeColors(Button button)
+    {
+        if (button.ImageSource is not null)
+        {
+            button.Handler?.UpdateValue(nameof(Button.ImageSource));
+        }
+
+        // A disabled button gets the Disabled color layer, as at start. An enabled button has one
+        // when its text color is not the one its style gives in the new theme.
+        if (button.Style is not { } style || (button.IsEnabled && button.TextColor == new Button { Style = style }.TextColor))
+        {
+            return;
+        }
+
+        VisualStateManager.GoToState(button, "Disabled");
+        button.Style = null;
+        button.Style = style;
+        VisualStateManager.GoToState(button, button.IsEnabled ? "Normal" : "Disabled");
+    }
+
     private static void InvalidateMeasureUpTo(Microsoft.UI.Xaml.Controls.TextBox textBox, Microsoft.UI.Xaml.DependencyObject? start)
     {
         for (var element = start;

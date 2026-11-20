@@ -9,6 +9,29 @@
     <WarningsAsErrors>$(WarningsAsErrors);CS1591;CS1573</WarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup Label="NuGet package">
+    <IsPackable>true</IsPackable>
+    <PackageId>Tolmacz</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Tomasz Jerzak</Authors>
+    <Copyright>Copyright (c) 2026 Tomasz Jerzak</Copyright>
+    <Description>Offline Polish-English translation for .NET on macOS and Windows. Translates in both directions on the CPU with ONNX Runtime, and keeps layout, numbers, addresses and links. The translation model is downloaded separately from https://github.com/TomJerzak/tolmacz-model.</Description>
+    <PackageTags>translation;translator;machine-translation;polish;english;offline;onnx</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/TomJerzak/tolmacz</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/TomJerzak/tolmacz</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="Tolmacz.Tests" />
   </ItemGroup>

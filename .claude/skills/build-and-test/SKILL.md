@@ -1,6 +1,6 @@
 ---
 name: build-and-test
-description: Build, test, run and package Tolmacz on macOS or Windows. Use when building the app, running tests, starting the app, or creating the DMG or Windows installer.
+description: Build, test, run and package Tolmacz on macOS or Windows. Use when building the app, running tests, starting the app, or creating the DMG, Windows installer or NuGet package.
 ---
 
 # Build and test Tolmacz
@@ -45,6 +45,7 @@ Each installer must be built on its own platform.
 | --- | --- | --- |
 | macOS | `scripts/package-macos.sh` | `dist/Tolmacz-macOS.dmg` |
 | Windows | `scripts\package-windows.ps1` | `dist\Tolmacz-Setup.exe` (needs Inno Setup 7) |
+| Any | `dotnet pack src/Tolmacz -c Release -o dist/nuget -p:ContinuousIntegrationBuild=true` | `dist/nuget/Tolmacz.<version>.nupkg` and `.snupkg` |
 
 ## Settings that must stay
 - `UseInterpreter=false` on Mac Catalyst avoids a Mono interpreter crash.

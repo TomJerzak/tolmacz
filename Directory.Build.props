@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <!-- Only the library in src/Tolmacz is published as a NuGet package. -->
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
 </Project>

@@ -45,8 +45,15 @@ step. The user checks the code manually before the main repository is published.
       from the README. Explain the unsigned-app warnings: macOS Gatekeeper for the DMG and
       Windows SmartScreen for the setup program.
 
-## 6. NuGet (only when the user decides to publish a package)
+## 6. NuGet
 - [ ] Only `src/Tolmacz` is packaged. The public API is `ITranslator`, `MarianOnnxTranslator`,
       `TranslationDirection`, `TranslationResult`, `TranslationModel` and
       `TranslationModelException`; everything else stays internal.
 - [ ] The package does not include the model. The README explains where to download it.
+- [ ] Raise `<Version>` in `src/Tolmacz/Tolmacz.csproj` for every release. A published version
+      cannot be replaced or deleted, only unlisted.
+- [ ] Pack with `dotnet pack src/Tolmacz -c Release -o dist/nuget -p:ContinuousIntegrationBuild=true`,
+      then install the `.nupkg` from that folder into a new console app and run the README sample.
+- [ ] The user runs `dotnet nuget push` with their own API key. Never ask for the key or put it in
+      a file or command.
+- [ ] Keep `src/Tolmacz/README.md` (shown on nuget.org) in line with the main README.

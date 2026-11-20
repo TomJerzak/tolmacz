@@ -58,7 +58,13 @@ stay with any copy you distribute.
 
 ### Usage
 
-Add a reference to `src/Tolmacz` and pass the model folder to the translator:
+Add the [Tolmacz NuGet package](https://www.nuget.org/packages/Tolmacz) to your project:
+
+```bash
+dotnet add package Tolmacz
+```
+
+Then pass the model folder to the translator:
 
 ```csharp
 using Tolmacz;
@@ -74,7 +80,8 @@ explains what is wrong. After downloading a model, call `TranslationModel.Verify
 detect damaged files.
 
 The library targets .NET 10 and has been tested on macOS (Apple Silicon) and Windows 11 (x64).
-It is not yet published as a NuGet package.
+In a .NET MAUI app for Mac Catalyst, set `<UseInterpreter>false</UseInterpreter>` for the
+Mac Catalyst build, because the Mono interpreter crashes while translating longer sentences.
 
 ## Tested platforms
 
@@ -196,6 +203,12 @@ top of `scripts/score_comet.py`.
 | Windows | `scripts\package-windows.ps1` | `dist\Tolmacz-Setup.exe` |
 
 Each installer must be built on its own platform.
+
+To create the library's NuGet package and its symbols package in `dist/nuget`:
+
+```bash
+dotnet pack src/Tolmacz -c Release -o dist/nuget -p:ContinuousIntegrationBuild=true
+```
 
 macOS blocks apps that are not signed with an Apple Developer ID. To give the app to other
 people without a warning, set `CODESIGN_KEY` before packaging and notarize the DMG.

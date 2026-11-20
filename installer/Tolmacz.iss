@@ -2,7 +2,7 @@
 [Setup]
 AppId={{6E4B7C0A-52D1-4B7E-9F13-7A2C8D1E4F60}
 AppName=Tolmacz
-AppVersion=1.0
+AppVersion=1.0.1
 DefaultDirName={localappdata}\Programs\Tolmacz
 DefaultGroupName=Tolmacz
 DisableProgramGroupPage=yes

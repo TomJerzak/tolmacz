@@ -77,20 +77,12 @@
     <Grid Padding="28,20,28,20" RowDefinitions="Auto,*,Auto" RowSpacing="18">
 
         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-            <Border
-                Background="{StaticResource AccentBrush}"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 12"
+            <Image
+                Source="logo.png"
                 WidthRequest="40"
-                HeightRequest="40">
-                <Label
-                    Text="T"
-                    FontFamily="OpenSansSemibold"
-                    FontSize="20"
-                    TextColor="White"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
-            </Border>
+                HeightRequest="40"
+                VerticalOptions="Center"
+                AutomationProperties.IsInAccessibleTree="False" />
             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                 <Label
                     Style="{StaticResource PrimaryText}"

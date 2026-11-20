@@ -14,8 +14,8 @@
 
 		<ApplicationTitle>Tolmacz</ApplicationTitle>
 		<ApplicationId>com.tomaszjerzak.tolmacz</ApplicationId>
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+		<ApplicationVersion>2</ApplicationVersion>
 
 		<!-- Windows: a plain executable that carries its own .NET and Windows App SDK. -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -36,8 +36,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#1F5EFF" />
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1F5EFF" BaseSize="128,128" />
+		<!-- macOS rounds app icons itself, so its icon fills the square; the Windows icon has its own rounded corners. -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'" />
+		<MauiIcon Include="Resources\AppIcon\Windows\appicon.svg" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#4F46E5" BaseSize="128,128" />
+		<MauiImage Include="Resources\Images\*" />
 		<MauiFont Include="Resources\Fonts\*" />
 	</ItemGroup>
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Tolmacz app icon for Windows: the macOS icon on a rounded square with a margin,
+     because Windows does not round app icons. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="background" x1="0" y1="100" x2="0" y2="924" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#4338CA"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="184" fill="url(#background)"/>
+  <path d="M300 230 h260 a80 80 0 0 1 80 80 v150 a80 80 0 0 1 -80 80 h-170 l-90 70 v-70 a80 80 0 0 1 -80 -80 v-150 a80 80 0 0 1 80 -80 z" fill="#A5B4FC"/>
+  <path d="M370 460 L430 300 L490 460 M391.6 402.4 H468.4" fill="none" stroke="#3730A3" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M464 420 h260 a80 80 0 0 1 80 80 v150 a80 80 0 0 1 -80 80 v70 l-90 -70 h-170 a80 80 0 0 1 -80 -80 v-150 a80 80 0 0 1 80 -80 z" fill="#FFFFFF"/>
+  <path d="M534 630 L594 470 L654 630 M555.6 572.4 H632.4" fill="none" stroke="#4F46E5" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M650.6 630 C623.4 660.6 616.6 694.6 657.4 694.6" fill="none" stroke="#4F46E5" stroke-width="25.5" stroke-linecap="round"/>
+</svg>

@@ -2,7 +2,7 @@
 [Setup]
 AppId={{6E4B7C0A-52D1-4B7E-9F13-7A2C8D1E4F60}
 AppName=Tolmacz
-AppVersion=1.0.1
+AppVersion=1.0.2
 DefaultDirName={localappdata}\Programs\Tolmacz
 DefaultGroupName=Tolmacz
 DisableProgramGroupPage=yes
@@ -15,6 +15,7 @@ OutputBaseFilename=Tolmacz-Setup
 Compression=lzma2
 SolidCompression=yes
 UninstallDisplayIcon={app}\Tolmacz.App.exe
+SetupIconFile=..\src\Tolmacz.App\Resources\AppIcon\Windows\appicon.ico
 
 [Files]
 Source: "..\dist\windows\Tolmacz\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion

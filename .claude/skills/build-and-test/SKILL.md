@@ -47,6 +47,9 @@ Each installer must be built on its own platform.
 | Windows | `scripts\package-windows.ps1` | `dist\Tolmacz-Setup.exe` (needs Inno Setup 7) |
 | Any | `dotnet pack src/Tolmacz -c Release -o dist/nuget -p:ContinuousIntegrationBuild=true` | `dist/nuget/Tolmacz.<version>.nupkg` and `.snupkg` |
 
+After changing `src/Tolmacz.App/Resources/AppIcon/Windows/appicon.svg`, remake `appicon.ico` next to it
+with `tools/Tolmacz.IconMaker` (see the README). The Windows app and installer use that `.ico`.
+
 ## Settings that must stay
 - `UseInterpreter=false` on Mac Catalyst avoids a Mono interpreter crash.
 - `ValidateXcodeVersion=false` allows newer Xcode versions.

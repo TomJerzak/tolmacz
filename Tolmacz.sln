@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tolmacz.Evaluation", "tools
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tolmacz.Evaluation.Tests", "tests\Tolmacz.Evaluation.Tests\Tolmacz.Evaluation.Tests.csproj", "{8181EDDD-19F9-49DE-B672-589D57DD6801}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tolmacz.IconMaker", "tools\Tolmacz.IconMaker\Tolmacz.IconMaker.csproj", "{46A6535F-27B4-49CD-B972-8FB5881EE2F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,18 @@ Global
 		{8181EDDD-19F9-49DE-B672-589D57DD6801}.Release|x64.Build.0 = Release|Any CPU
 		{8181EDDD-19F9-49DE-B672-589D57DD6801}.Release|x86.ActiveCfg = Release|Any CPU
 		{8181EDDD-19F9-49DE-B672-589D57DD6801}.Release|x86.Build.0 = Release|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Debug|x64.Build.0 = Debug|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Debug|x86.Build.0 = Debug|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Release|x64.ActiveCfg = Release|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Release|x64.Build.0 = Release|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,5 +143,6 @@ Global
 		{13F2E7CD-44BE-4432-BB25-96CAB8250FF4} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{71BB6349-4B6F-4527-901D-B89F79BCC996} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
 		{8181EDDD-19F9-49DE-B672-589D57DD6801} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{46A6535F-27B4-49CD-B972-8FB5881EE2F2} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
 	EndGlobalSection
 EndGlobal

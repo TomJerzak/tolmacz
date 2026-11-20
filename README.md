@@ -152,6 +152,7 @@ Speed depends on the processor, so newer or faster ones, such as Apple M4, will 
 | `src/Tolmacz.Presentation` | Screen state and commands, with no MAUI dependency |
 | `src/Tolmacz.App` | .NET MAUI desktop application |
 | `tools/Tolmacz.Evaluation` | Translation quality evaluation tool |
+| `tools/Tolmacz.IconMaker` | Makes the Windows icon file, with every standard size, from its SVG |
 | `tests/Tolmacz.Tests` | Translation library tests |
 | `tests/Tolmacz.Presentation.Tests` | Screen logic tests |
 | `tests/Tolmacz.Evaluation.Tests` | Evaluation tool tests |
@@ -203,6 +204,13 @@ top of `scripts/score_comet.py`.
 | Windows | `scripts\package-windows.ps1` | `dist\Tolmacz-Setup.exe` |
 
 Each installer must be built on its own platform.
+
+The Windows app and installer use `src/Tolmacz.App/Resources/AppIcon/Windows/appicon.ico`, made
+from the SVG next to it. After changing that SVG, make the icon again:
+
+```bash
+dotnet run --project tools/Tolmacz.IconMaker -- src/Tolmacz.App/Resources/AppIcon/Windows/appicon.svg src/Tolmacz.App/Resources/AppIcon/Windows/appicon.ico
+```
 
 To create the library's NuGet package and its symbols package in `dist/nuget`:
 

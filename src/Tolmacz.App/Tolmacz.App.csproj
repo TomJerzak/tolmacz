@@ -14,8 +14,8 @@
 
 		<ApplicationTitle>Tolmacz</ApplicationTitle>
 		<ApplicationId>com.tomaszjerzak.tolmacz</ApplicationId>
-		<ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-		<ApplicationVersion>2</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+		<ApplicationVersion>3</ApplicationVersion>
 
 		<!-- Windows: a plain executable that carries its own .NET and Windows App SDK. -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -31,6 +31,10 @@
 
 		<!-- The Mono interpreter crashes while translating longer sentences. -->
 		<UseInterpreter Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">false</UseInterpreter>
+
+		<!-- Windows: an icon with every standard size, made by tools/Tolmacz.IconMaker from
+		     Resources/AppIcon/Windows/appicon.svg. MAUI's own icon has only a 64 x 64 image. -->
+		<ApplicationIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">Resources\AppIcon\Windows\appicon.ico</ApplicationIcon>
 
 		<ModelDirectory>$(MSBuildThisFileDirectory)..\..\models\bidi-eng-pol\</ModelDirectory>
 	</PropertyGroup>
